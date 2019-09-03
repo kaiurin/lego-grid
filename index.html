@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Smart Home</title>
+    <div class="container" style="text-align: center; margin-top: 5px">
+    </div>
+</head>
+<body>
+<div style="width: 240px; position: relative; left:50%; margin-left: -120px">
+    <div style="display: inline-block; width: 180px">Current price for kW:</div>
+    <div id="price" style="text-align: center; width: 50px;display: inline-block">10 BC</div>
+</div>
+<div style="width: 240px; position: relative; left:50%; margin-left: -120px">
+    <div style="display: inline-block; width: 180px">Current consumption:</div>
+    <div id="consumption" style="text-align: center; width: 50px;display: inline-block">2 kW</div>
+</div>
+<div style="width: 240px; position: relative; left:50%; margin-left: -120px">
+    <div style="display: inline-block; width: 180px">Current payment:</div>
+    <div id="payment" style="text-align: center; width: 50px;display: inline-block">20 BC</div>
+</div>
+<div style="width: 240px; position: relative; left:50%; margin-left: -120px">
+    <div style="display: inline-block; width: 180px">Total paid: </div>
+    <div id="paid" style="text-align: center; width: 50px;display: inline-block">60 BC</div>
+</div>
+
+<div class="container">
+    <div class="checkbox-name">First floor</div>
+    <div class='checkbox'>
+        <label class='switch'>
+            <input type='checkbox' id='green'/>
+            <div class='slider round'></div>
+        </label>
+    </div>
+</div>
+<div class="container">
+    <div class="checkbox-name">Second floor</div>
+    <div class='checkbox'>
+        <label class='switch'>
+            <input type='checkbox' id='blue'/>
+            <div class='slider round'></div>
+        </label>
+    </div>
+</div>
+<div class="container">
+    <div class="checkbox-name">Roof</div>
+    <div class='checkbox'>
+        <label class='switch'>
+            <input type='checkbox' id='White'/>
+            <div class='slider round'></div>
+        </label>
+    </div>
+</div>
+<div class="container">
+    <img src="image.png"/>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script>
+	let verified = false;
+	let countObject = {
+		'salad': 0,
+		'pasta': 0,
+		'soup': 0,
+		'cake': 0,
+		'wine': 0,
+	};
+	let priceObject = {
+		'salad': 100,
+		'pasta': 150,
+		'soup': 140,
+		'cake': 110,
+		'wine': 150,
+	};
+
+	function countChange(id, change) {
+		if (change === '+') {
+			if (id === 'wine') {
+				if (!verified) {
+					document.getElementById('button_modal').click();
+
+				} else {
+					countObject[id]++;
+				}
+			} else {
+				countObject[id]++;
+			}
+		} else {
+			if (countObject[id] > 0) {
+				countObject[id]--;
+			}
+		}
+		document.getElementById(id).innerHTML = countObject[id];
+		calc()
+	}
+
+	function calc() {
+		let value = 0;
+		for (let key in countObject) {
+			if (countObject[key] > 0) {
+				value = value + countObject[key] * priceObject[key];
+			}
+		}
+		console.log(value);
+		document.getElementById('balance').innerHTML = value;
+	}
+</script>
+</body>
+</html>
